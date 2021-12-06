@@ -1,0 +1,77 @@
+print("hello, LuaCallCs")
+--1.lua没有new关键字，不需要
+--2.所有lua调用C#的东西都得用CS. （不包括成员变量和成员函数）
+--3.xlua是支持重载  
+--4，调用静态属性或变量  CS.命名空间.类名.属性名或方法名 或 CS.类名.属性名或方法名
+--5，调用静态方法   CS.命名空间.类名.方法名() 或 CS.类名.方法名()
+
+
+--[[
+--GameObject obj = new UnityEngine.GameObject();//C#的创建方式
+obj = CS.UnityEngine.GameObject("Lua")--CS.命名空间.构造函数
+local Time = CS.UnityEngine.Time
+print(Time.deltaTime);--调用静态的属性
+Time.timeScale = 0.1;--对静态的属性赋值
+start = CS.UnityEngine.GameObject.Find("Start");
+print(start);
+print(CS.A.name)
+]]
+
+--[[
+obj = CS.UnityEngine.Resources.Load<CS.UnityEngine.GameObject>("Cube");
+CS.UnityEngine.Object.Instantiate(obj);
+]]
+
+--[[
+--调用成员属性和成员方法
+--调用成员变量或属性   对象名.变量名或属性名
+--调用成员方法  对象名：方法名()
+--xlua支持派生类的对象调用父类的方法
+testB = CS.TestB()
+print(testB.name)
+testB:method1()
+testB:CMethod() -- 调用了父类的方法
+]]
+
+--[[
+--第1种方法：通过一个函数把继承了mono的脚本对象传递过来
+SetCS = function(luaCallCs)
+	this = luaCallCs
+end
+
+PrintStr = function()
+	print(this.str);
+end
+
+-- 第2：C#种通过Global.Set()方法把this 直接传过来
+PrintLXM1 = function()
+	print(mono.str)
+end
+]]
+
+
+
+--[[
+-- 静态调用C# 使用"CS.类名.静态方法名"
+CS.A.Method("小神童", true)
+a,b = CS.A.Method1("Method1静态调用")
+print("a:", a)
+print("b:", b)
+
+
+-- 如果C# 中 第一个参数是out参数，lua 中的第一个参数会传给C#中的第二个参数，没有则丢弃 
+
+-- 接收的返回值是out参数的值
+c,d = CS.A.Method2("lua第一个参数", "lua第二个参数")
+print("c：", c)
+print("d：", d)
+
+-- 即 C# 中的out参数 lua中不用传，忽略即可  
+e = CS.A.SetOut();
+print("e：", e)
+
+-- lua 支持方法的重载，但不能区分 float，int 等 因为lua中只有number 类型
+CS.A.Method3("3")
+CS.A.Method3(1.1)
+]]
+

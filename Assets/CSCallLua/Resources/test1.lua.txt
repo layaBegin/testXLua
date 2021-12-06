@@ -1,0 +1,92 @@
+--print("hehe")
+
+-- lua 中的table 索引是从1开始的
+--[[a = {1,4,5}  
+print(a[1])]]
+
+--[[
+c = "abcdef"
+print(c)
+-- 取table 的长度 用‘#’ 只能取连续的，其他的忽略
+print(#c) 
+-- 字符串相加 用 '..'
+d = "dfsd".."hhe"
+print(d)
+]]
+
+
+--[[
+t_1 = {[-1]=5, ["k1"]=4,3.9,7}
+for key,value in pairs(t_1) do
+	print(key,value)
+end
+print("t_1的长度：",#t_1)
+]]
+
+--[[
+a = -1
+if	a > 10 then
+print("a大于10")
+elseif a < 10 and a >=0 then
+print("a为小于10的正整数")
+else
+print("a为负数")
+end
+]]
+
+
+--a = 0
+--[[
+while a < 10 do
+a = a + 1
+print(a)
+end
+]]
+
+--[[
+repeat
+ a= a+1
+ print(a)
+ until a >= 10
+]]
+
+-- for循环，默认间隔 +1，可以指定间隔 i=1,#t_2,3等等
+--[[
+t_2 = {3,5,7,1,2,9,4}
+for i=1,#t_2 do
+ print("i:"..i)
+ print("t_2:"..t_2[i])
+end
+]]
+
+--[[
+function testfun1()
+  print("函数先定义，再调用")
+end
+
+testfun1()
+
+function test2(a,b)
+print(a,b)
+end
+test2(1,'sdf')
+]]
+
+--[[
+function test3(a,b,c)
+	print("参数长度为："..#arg)
+	if	(#arg > 0) then
+		for i=1,#arg do
+			print(arg[i])
+		end
+	end
+	print(a,b,c)
+end
+
+test3("sdf",4,3)
+]]
+ model = {}
+ model.func1 = function()
+	print("测试model dsfsd")
+end
+model.func1()

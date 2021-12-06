@@ -1,0 +1,30 @@
+print("Start CS Call Lua")
+
+a = 10
+b = "龙哥"
+c = true
+ta = {key = "nihao", key2 = "long ge", key3 = true, 1, 2, true, 
+		func1 = function() print("--func1") end
+		}
+
+globalfunc1 = function()
+	print("globalfunc1")
+end
+
+globalfunc2 = function()
+	return "龙哥今天腰不疼，昨天吃了一锅腰子"
+end
+
+globalfunc3 = function(str)
+	print(str)
+end
+
+globalfunc4 = function()
+	return "龙哥", "腰疼", false, "老中医在哪里"
+end
+
+function global(...)
+	local arg = { ... } --使用这种方式接收可变参数列表
+	print(#arg)
+	print(arg[1],arg[2])
+end
