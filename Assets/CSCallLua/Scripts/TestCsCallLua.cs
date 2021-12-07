@@ -23,6 +23,9 @@ public class TestCsCallLua : MonoBehaviour
     public delegate void Func5(params string[] args);
     void Start()
     {
+        //注意：Lua 文件是从上到下顺序执行的
+        //Lua文件必须以.lua.txt 结尾-----------
+        //且必须放在Resources文件夹下，如果不想放在Resources下，可以自定义加载器
 
         //string lua = "print('Hello XLua!')";//这是一个lua的语句
         //luaenv.DoString(lua);
@@ -32,8 +35,8 @@ public class TestCsCallLua : MonoBehaviour
 
         //luaenv.AddLoader(TestLoader);//注册一个自定义的加载器,注册之后所有的脚本都得放里面
         //luaenv.DoString("require('testLoader')");
-        
-        
+
+
         luaenv.DoString("require('testCsCallLua')");
 
         //-----获取lua里面的参数-------------------
@@ -55,10 +58,7 @@ public class TestCsCallLua : MonoBehaviour
         //Debug.Log(ta.key + " -- " + ta.key2 + " --- " + ta.key3);
         //ta.func1();
 
-        //---会报错，原因未知，暂不用此方法映射
-        //ITestTable ita = luaenv.Global.Get<ITestTable>("ta");
-        //Debug.Log(ita.key + " -- " + ita.key2 + " --- " + ita.key3);
-        //ita.func1();
+        
 
         //3. 映射到 字典 或 List中  值传递
         //映射到字典时，只能把table中索引的类型于字典键的类型一致，并对应的值的类型也一致的情况才能映射过来,其他的忽略掉

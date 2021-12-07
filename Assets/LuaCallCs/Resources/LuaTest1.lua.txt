@@ -56,17 +56,14 @@ end
 CS.A.Method("小神童", true)
 a,b = CS.A.Method1("Method1静态调用")
 print("a:", a)
-print("b:", b)
-
-
--- 如果C# 中 第一个参数是out参数，lua 中的第一个参数会传给C#中的第二个参数，没有则丢弃 
+print("b:", b) 
 
 -- 接收的返回值是out参数的值
 c,d = CS.A.Method2("lua第一个参数", "lua第二个参数")
 print("c：", c)
 print("d：", d)
 
--- 即 C# 中的out参数 lua中不用传，忽略即可  
+-- 即 C# 中的out参数 lua中不用传，忽略即可 ，ref 需要传 
 e = CS.A.SetOut();
 print("e：", e)
 

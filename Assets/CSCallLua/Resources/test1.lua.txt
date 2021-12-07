@@ -1,5 +1,7 @@
 --print("hehe")
 
+
+
 -- lua 中的table 索引是从1开始的
 --[[a = {1,4,5}  
 print(a[1])]]
