@@ -1,0 +1,22 @@
+print("luaUI,来了，老弟");
+
+local speed = 200
+
+function start()
+	print("执行start")
+	print("injected object：", lightObject)
+	lightCpnt= lightObject:GetComponent(typeof(CS.UnityEngine.Light))
+	print("injected object：", cube)
+end
+
+function update()
+	print("执行update")
+	if (cube ~= null) then
+        cube.transform:Rotate(CS.UnityEngine.Vector3.up, CS.UnityEngine.Time.deltaTime * speed);
+
+	end
+end
+
+function ondestroy()
+	print("执行destroy")
+end

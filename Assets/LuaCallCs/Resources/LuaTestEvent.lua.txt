@@ -1,0 +1,64 @@
+
+
+--[[
+cat = CS.testEvent.Cat();
+
+function mousceRun()
+	print("老鼠跑了")
+end
+
+function person()
+	print("主人醒了")
+end
+
+-- 事件添加的方式，同委托不同
+cat:CatCall("+",mousceRun);
+cat:CatCall("+",person);
+cat:CatCall("-",mousceRun); -- 删除事件
+cat:OnCatCall();
+]]
+
+--[[
+-- lua 调用Unity组件，由于lua没有泛型，可以用typeof指定类型
+this.gameObject:AddComponent(typeof(CS.UnityEngine.Rigidbody))
+rigi = this.gameObject:GetComponent(typeof(CS.UnityEngine.Rigidbody))
+print(rigi.useGravity);
+]]
+
+
+
+function start()
+	btn = btnNode.transform:GetComponent(typeof(CS.UnityEngine.UI.Button))
+	image = imageNode.transform:GetComponent(typeof(CS.UnityEngine.UI.Image))
+	btn.onClick:AddListener(onBtnClick)
+
+	--Unity中获取的数组从0开始的，(正常情况下lua 中从1开始)
+	images = parentNode:GetComponentsInChildren(typeof(CS.UnityEngine.UI.Image))
+	print(images)
+	for i=0,images.Length - 1 do
+		print(i,images[i])
+	end
+end
+
+function update()
+	print("luaUpdate")
+end
+
+function ondestroy()
+	print("luaOnDestroy")
+	btn.onClick:RemoveListener(onBtnClick)
+	--因为Unity的事件优化系统，在remove之后最好执行Invoke 让其清理缓存
+	btn.onClick:Invoke()
+end
+
+function onBtnClick()
+	print("点击了按钮");
+	--加载图片精灵
+	sp = CS.UnityEngine.Resources.Load("Textures/zhaomin",typeof(CS.UnityEngine.Sprite))
+	image.sprite = sp
+	--加载prefab
+	prefab = CS.UnityEngine.Resources.Load("Image",typeof(CS.UnityEngine.GameObject))
+	CS.UnityEngine.Object.Instantiate(prefab,parentNode.transform)
+	prefab.transform.position = CS.UnityEngine.Vector3.zero
+	
+end

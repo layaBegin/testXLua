@@ -1,0 +1,72 @@
+print("来了，老弟~")
+--[[
+str = "lua为默认参数传值"
+--调用一个带有默认参数的c#的方法，并且传入了参数
+--CS.TestCS1.Test(str);
+--调用一个带有默认参数的c#方法，未传入参数，使用默认值
+--CS.TestCS1.Test();
+--调用一个可变参数的方法
+--CS.TestCS1.Test2("C#", "Java");
+]]
+
+--获取一个枚举值。   
+--en = CS.MyType.PlayerType.ZhangShan
+--CS.TestEnum.Method(en);
+
+--通过 __CastFrom这个方法把一个数字转成了枚举
+en1 = CS.MyType.PlayerType.__CastFrom(2.7)
+--如果转换数字的话，超出界限的无效数字，不报错
+--如果转换数字的话，带有有小数点额数字，忽略掉小数点
+CS.TestEnum.Method(en1);
+
+--通过 __CastFrom这个方法把一个字符串转成了枚举
+--en2 = CS.MyType.PlayerType.__CastFrom("LinShuHao")
+--如果转换字符串的话，必须保证字符串是有效的，否则报错
+--CS.TestEnum.Method(en2);
+
+print("---------------------------------------------------")
+
+--[[
+function testDel()
+	print("lua委托")
+end
+--委托为空的时候不能相加，直接用=赋值，否则报错 因为没赋值 lua 视其为nil
+CS.TestDelegate.del = CS.TestDelegate.Test1;
+--CS.TestDelegate.del();
+CS.TestDelegate.del = CS.TestDelegate.del + CS.TestDelegate.Test;
+--CS.TestDelegate.del();
+-- 也可以加Lua的方法
+CS.TestDelegate.del = CS.TestDelegate.del + testDel
+--CS.TestDelegate.del();
+
+--从委托里删除一个方法
+CS.TestDelegate.del = CS.TestDelegate.del - CS.TestDelegate.Test1
+if	nil ~= CS.TestDelegate.del then
+	CS.TestDelegate.del()
+end
+]]
+
+
+--成员变量的方式执行委托
+testDelegate1 = CS.TestDelegate1()
+--testDelegate1.del1 = testDelegate1:test 会报错
+-- 如果C#成员方法不能加进委托，可以加Lua的方法， 在lua 方法中执行委托
+function func2()
+ testDelegate1:test()
+ print("执行func2")
+end
+testDelegate1.del1 =  func2
+if	nil ~= testDelegate1.del1 then
+	testDelegate1.del1()
+end
+
+
+--委托用完之后要释放，否则会报错
+function DisposeDel()
+	print("DisposeDel")
+
+	--testDelegate1.del1 = nil
+
+	testDelegate1.del1 = nil
+	CS.TestDelegate.del = nil;
+end
